@@ -19,7 +19,7 @@
             "Bunkermaster\\Helper\\": "Helper/"
         },
         "files": [
-            "conf.php"
+            "conf/conf.php"
         ]
 
     }
