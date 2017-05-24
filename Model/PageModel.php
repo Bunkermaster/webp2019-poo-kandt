@@ -25,27 +25,24 @@ class PageModel
 FROM
   `page`
 ";
-        // si j'ai un param, je dois ajouter des conditions
-        // donc j'ajoute le WHERE
-        if (!is_null($slug) || !is_null($id) || !is_null($default)) {
-            $sql .= "WHERE\n  ";
-            // je cree la pile des conditions
-            $conditions = [];
-            // je rajoute une condition si slug n'est pas null
-            if (!is_null($slug)) {
-                $conditions[] = "`slug` = :slug";
-            }
-            // je rajoute une condition si id n'est pas null
-            if (!is_null($id)) {
-                $conditions[] = "`id` = :id";
-            }
-            // je rajoute une condition si default n'est pas null
-            if (!is_null($default)) {
-                $conditions[] = "`default` = 1";
-            }
-            // je reconstruis le WHERE a partir des coditions
-            // en utilisant le implode
-            $sql .= implode("\n  AND ", $conditions);
+        // je cree la pile des conditions
+        $conditions = [];
+        // je rajoute une condition si slug n'est pas null
+        if (!is_null($slug)) {
+            $conditions[] = "`slug` = :slug";
+        }
+        // je rajoute une condition si id n'est pas null
+        if (!is_null($id)) {
+            $conditions[] = "`id` = :id";
+        }
+        // je rajoute une condition si default n'est pas null
+        if (!is_null($default)) {
+            $conditions[] = "`default` = 1";
+        }
+        // je reconstruis le WHERE a partir des coditions
+        // en utilisant le implode
+        if (count($conditions) > 0) {
+            $sql .= "WHERE\n  ".implode("\n  AND ", $conditions);
         }
         // je prepare ma requete (dynamique)
         $stmt = Database::get()->prepare($sql);
