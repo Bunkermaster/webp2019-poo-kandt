@@ -28,8 +28,9 @@ class PageController
         // recuperation des donnees
         $data = $this->model->getByDefault();
         // gestion de la generation de l'affichage
-
-        return $data;
+        ob_start();
+        require APP_DIR_VIEW."page/default-page.php";
+        return ob_get_clean();
     }
 
     /**

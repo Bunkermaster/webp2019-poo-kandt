@@ -37,7 +37,7 @@ FROM
         }
         // je rajoute une condition si default n'est pas null
         if (!is_null($default)) {
-            $conditions[] = "`default` = 1";
+            $conditions[] = "`default_page` = 1";
         }
         // je reconstruis le WHERE a partir des coditions
         // en utilisant le implode

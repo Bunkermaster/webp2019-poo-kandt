@@ -1,0 +1,26 @@
+{
+    "name": "bunkermaster/webp2019-poo-kandt",
+    "require": {
+        "twig/twig": "^2.3"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^3.2"
+    },
+    "authors": [
+        {
+            "name": "bunkermaster",
+            "email": "yann.le-scouarnec@hetic.net"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Bunkermaster\\Controller\\": "Controller/",
+            "Bunkermaster\\Model\\": "Model/",
+            "Bunkermaster\\Helper\\": "Helper/"
+        },
+        "files": [
+            "conf.php"
+        ]
+
+    }
+}
