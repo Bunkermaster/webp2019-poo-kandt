@@ -11,6 +11,12 @@ use Bunkermaster\Helper\Database;
  */
 class PageModel
 {
+    /**
+     * @param null|string $slug
+     * @param null|int $id
+     * @param null|bool $default
+     * @return array
+     */
     private function get($slug = null, $id = null, $default = null)
     {
         $sql = "SELECT
@@ -61,24 +67,38 @@ FROM
         return $stmt->fetchAll(\PDO::FETCH_OBJ);
     }
 
+    /**
+     * @return array
+     */
     public function getList()
     {
 
         return $this->get();
     }
 
+    /**
+     * @param $slug
+     * @return object|bool
+     */
     public function getBySlug($slug)
     {
 
-        return $this->get($slug);
+        return current($this->get($slug));
     }
 
+    /**
+     * @param int $id
+     * @return object|bool
+     */
     public function getById($id)
     {
 
         return $this->get(null, $id);
     }
 
+    /**
+     * @return object|bool
+     */
     public function getByDefault()
     {
 

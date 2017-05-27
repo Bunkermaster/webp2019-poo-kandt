@@ -22,6 +22,7 @@ class PageController
 
     /**
      * Affiche la page par defaut
+     * @return string
      */
     public function homeAction()
     {
@@ -35,14 +36,27 @@ class PageController
 
     /**
      * affiche la page dont le slug est fourni
+     * @return string
      */
     public function detailsAction()
     {
-
+        if (!isset($_GET['s']) || trim($_GET['s']) === "") {
+            return ErrorController::badRequestAction();
+        }
+        $slug = $_GET['s'];
+        $data = $this->model->getBySlug($slug);
+        dump($data);
+        if ($data === false){
+            return ErrorController::notFoundAction();
+        }
+        ob_start();
+        require APP_DIR_VIEW."page/default-page.php";
+        return ob_get_clean();
     }
 
     /**
      *
+     * @return string
      */
     public function adminHomeAction()
     {
@@ -51,6 +65,7 @@ class PageController
 
     /**
      *
+     * @return string
      */
     public function adminAddAction()
     {
@@ -59,6 +74,7 @@ class PageController
 
     /**
      *
+     * @return string
      */
     public function adminDetailsAction()
     {
@@ -67,6 +83,7 @@ class PageController
 
     /**
      *
+     * @return string
      */
     public function adminEditAction()
     {
@@ -75,6 +92,7 @@ class PageController
 
     /**
      *
+     * @return string
      */
     public function adminDeleteAction()
     {

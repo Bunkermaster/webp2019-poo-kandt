@@ -12,4 +12,4 @@ require_once "vendor/autoload.php";
 // instanciation du controller
 $page = new PageController();
 // appel de la méthode en dur (démo)
-echo $page->homeAction();
+echo $page->detailsAction();
