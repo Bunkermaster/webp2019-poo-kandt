@@ -5,11 +5,10 @@
  * Date: 24/05/2017
  * Time: 15:02
  */
-use \Bunkermaster\Controller\PageController;
+use \Bunkermaster\Helper\FrontController;
+
 
 // inclusion manuelle des fichiers
 require_once "vendor/autoload.php";
 // instanciation du controller
-$page = new PageController();
-// appel de la méthode en dur (démo)
-echo $page->detailsAction();
+$app = new FrontController();

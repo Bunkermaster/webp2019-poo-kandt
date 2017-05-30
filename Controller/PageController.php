@@ -45,7 +45,6 @@ class PageController
         }
         $slug = $_GET['s'];
         $data = $this->model->getBySlug($slug);
-        dump($data);
         if ($data === false){
             return ErrorController::notFoundAction();
         }
