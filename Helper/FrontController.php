@@ -26,6 +26,12 @@ class FrontController
                 $output = $controller->detailsAction();
                 break;
 
+            case "admin":
+            case "admin/":
+                $controller = new PageController();
+                $output = $controller->adminHomeAction();
+                break;
+
             default:
                 // / ou /index.php ou tout le reste
                 $controller = new PageController();

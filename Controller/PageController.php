@@ -59,7 +59,10 @@ class PageController
      */
     public function adminHomeAction()
     {
-
+        $data = $this->model->getList();
+        ob_start();
+        require APP_DIR_VIEW."page/admin/home.php";
+        return ob_get_clean();
     }
 
     /**
