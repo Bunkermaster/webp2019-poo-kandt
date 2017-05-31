@@ -7,7 +7,6 @@
  */
 use \Bunkermaster\Helper\FrontController;
 
-
 // inclusion manuelle des fichiers
 require_once "vendor/autoload.php";
 // instanciation du controller

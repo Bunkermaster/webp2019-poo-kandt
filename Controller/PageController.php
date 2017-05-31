@@ -2,15 +2,21 @@
 
 namespace Bunkermaster\Controller;
 
+use Bunkermaster\Helper\Controller;
 use Bunkermaster\Model\PageModel;
 
 /**
  * Class PageController
- * @author Yann Le Scouarnec <bunkermaster@gmail.com>
  * @package Bunkermaster\Controller
+ * @author Yann Le Scouarnec <bunkermaster@gmail.com>
  */
-class PageController
+class PageController extends Controller
 {
+    /**
+     * @var PageModel
+     */
+    private $model;
+
     /**
      * PageController constructor.
      */
@@ -29,9 +35,10 @@ class PageController
         // recuperation des donnees
         $data = $this->model->getByDefault();
         // gestion de la generation de l'affichage
-        ob_start();
-        require APP_DIR_VIEW."page/default-page.php";
-        return ob_get_clean();
+        return $this->render(
+            "page/default-page.php",
+            $data
+        );
     }
 
     /**
@@ -45,24 +52,26 @@ class PageController
         }
         $slug = $_GET['s'];
         $data = $this->model->getBySlug($slug);
-        if ($data === false){
+        if ($data === false) {
             return ErrorController::notFoundAction();
         }
-        ob_start();
-        require APP_DIR_VIEW."page/default-page.php";
-        return ob_get_clean();
+        return $this->render(
+            "page/default-page.php",
+            $data
+        );
     }
 
     /**
-     *
+     * blergh
      * @return string
      */
     public function adminHomeAction()
     {
         $data = $this->model->getList();
-        ob_start();
-        require APP_DIR_VIEW."page/admin/home.php";
-        return ob_get_clean();
+        return $this->render(
+            "page/admin/home.php",
+            $data
+        );
     }
 
     /**
@@ -71,7 +80,32 @@ class PageController
      */
     public function adminAddAction()
     {
-
+        $validation = [
+            'slug',
+            'nav_title',
+            'H1',
+            'paragraphe',
+            'img',
+            'alt',
+        ];
+        if ($_SERVER['REQUEST_METHOD'] === 'POST'
+            && $this->validationChamps($_POST, $validation)
+        ) {
+            $id = $this->model->add($_POST);
+            header('Location: ./?a=admin');
+            exit;
+        } else {
+            $data = [
+                'id' => '',
+                'slug' => '',
+                'nav_title' => '',
+                'H1' => '',
+                'paragraphe' => '',
+                'img' => '',
+                'alt' => '',
+            ];
+            return $this->render('page/admin/addForm.php', $data);
+        }
     }
 
     /**
@@ -80,7 +114,6 @@ class PageController
      */
     public function adminDetailsAction()
     {
-
     }
 
     /**

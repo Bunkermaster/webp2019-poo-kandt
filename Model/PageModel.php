@@ -3,13 +3,14 @@
 namespace Bunkermaster\Model;
 
 use Bunkermaster\Helper\Database;
+use Bunkermaster\Helper\Model;
 
 /**
  * Class PageModel
  * @author Yann Le Scouarnec <bunkermaster@gmail.com>
  * @package Bunkermaster\Model
  */
-class PageModel
+class PageModel extends Model
 {
     /**
      * @param null|string $slug
@@ -62,6 +63,7 @@ FROM
         }
         // j'execute
         $stmt->execute();
+        $this->errorManagement($stmt);
 
         // je fetchall en objet
         return $stmt->fetchAll(\PDO::FETCH_OBJ);
@@ -118,6 +120,33 @@ FROM
 
     public function add($data)
     {
+        $sql = "INSERT INTO
+                  `page`
+                (
+                    `slug`,
+                    `nav_title`,
+                    `H1`,
+                    `paragraphe`,
+                    `img`,
+                    `alt`
+                ) VALUES(
+                    :slug,
+                    :nav_title,
+                    :H1,
+                    :paragraphe,
+                    :img,
+                    :alt
+                )";
+        $stmt = Database::get()->prepare($sql);
+        $stmt->bindValue(':slug', $data['slug']);
+        $stmt->bindValue(':nav_title', $data['nav_title']);
+        $stmt->bindValue(':H1', $data['H1']);
+        $stmt->bindValue(':paragraphe', $data['paragraphe']);
+        $stmt->bindValue(':img', $data['img']);
+        $stmt->bindValue(':alt', $data['alt']);
+        $stmt->execute();
+        $this->errorManagement($stmt);
 
+        return Database::get()->lastInsertId();
     }
 }

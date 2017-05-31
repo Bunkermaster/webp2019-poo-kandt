@@ -8,6 +8,7 @@
     <title>Liste des pages</title>
 </head>
 <body>
+<a href="./?a=admin/add">+ Ajouter</a>
     <table>
         <thead>
             <tr>
