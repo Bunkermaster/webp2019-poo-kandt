@@ -122,7 +122,32 @@ class PageController extends Controller
      */
     public function adminEditAction()
     {
+        $validation = [
+            'id',
+            'slug',
+            'nav_title',
+            'H1',
+            'paragraphe',
+            'img',
+            'alt',
+        ];
+        if ($_SERVER['REQUEST_METHOD'] === 'POST'
+            && $this->validationChamps($_POST, $validation)
+        ) {
+            $this->model->update($_POST);
+            header('Location: ./?a=admin');
+            exit;
+        } elseif (isset($_GET['id'])
+            && false !== $data =$this->model->getById($_GET['id'])
+        ) {
 
+            return $this->render(
+                'page/admin/addForm.php', (array) $data
+            );
+        } else {
+            header('Location: ./?a=admin');
+            exit;
+        }
     }
 
     /**

@@ -95,7 +95,7 @@ FROM
     public function getById($id)
     {
 
-        return $this->get(null, $id);
+        return current($this->get(null, $id));
     }
 
     /**
@@ -110,7 +110,31 @@ FROM
 
     public function update($data)
     {
+        $sql = "UPDATE 
+                page 
+            SET 
+                slug = :slug,
+                nav_title = :nav_title,
+                H1 = :H1,
+                paragraphe = :paragraphe, 
+                img = :img,
+                alt = :alt
+            WHERE 
+                id = :id ";
 
+        $stmt = Database::get()->prepare($sql);
+        $stmt->bindValue(':slug', $data['slug'] ?? '');
+        $stmt->bindValue(':nav_title', $data['nav_title'] ?? '');
+        $stmt->bindValue(':H1', $data['H1'] ?? '');
+        $stmt->bindValue(':paragraphe', $data['paragraphe'] ?? '');
+        $stmt->bindValue(':img', $data['img'] ?? '');
+        $stmt->bindValue(':alt', $data['alt'] ?? '');
+        $stmt->bindValue(':id', $_GET['id']);
+        $stmt->execute();
+
+        $this->errorManagement($stmt);
+
+        return true;
     }
 
     public function delete($id)

@@ -38,6 +38,11 @@ class FrontController
                     $output = $controller->adminAddAction();
                     break;
 
+                case "admin/edit":
+                    $controller = new PageController();
+                    $output = $controller->adminEditAction();
+                    break;
+
                 default:
                     // / ou /index.php ou tout le reste
                     $controller = new PageController();

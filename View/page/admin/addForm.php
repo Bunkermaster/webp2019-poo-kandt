@@ -35,7 +35,7 @@
             <textarea name="paragraphe" id="paragraphe" cols="80" rows="15"><?=$data['paragraphe']?></textarea>
         </p>
         <p>
-            <input type="submit" value="Ajouter">
+            <input type="submit" value="<?=isset($data['id']) ? 'Modifier' :" Ajouter" ?>">
         </p>
     </form>
 </div>
