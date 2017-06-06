@@ -33,11 +33,10 @@ class PageController extends Controller
     public function homeAction()
     {
         // recuperation des donnees
-        $data = $this->model->getByDefault();
         // gestion de la generation de l'affichage
         return $this->render(
             "page/default-page.php",
-            $data
+            $this->model->getByDefault()
         );
     }
 
@@ -50,9 +49,7 @@ class PageController extends Controller
         if (!isset($_GET['s']) || trim($_GET['s']) === "") {
             return ErrorController::badRequestAction();
         }
-        $slug = $_GET['s'];
-        $data = $this->model->getBySlug($slug);
-        if ($data === false) {
+        if (false === $data = $this->model->getBySlug($_GET['s'])) {
             return ErrorController::notFoundAction();
         }
         return $this->render(
@@ -67,10 +64,9 @@ class PageController extends Controller
      */
     public function adminHomeAction()
     {
-        $data = $this->model->getList();
         return $this->render(
             "page/admin/home.php",
-            $data
+            $this->model->getList()
         );
     }
 
@@ -114,6 +110,11 @@ class PageController extends Controller
      */
     public function adminDetailsAction()
     {
+        if (false === $data = $this->model->getById($_GET['id'] ?? 0)) {
+            throw new \ErrorException('O_o');
+        }
+
+        return $this->render('page/admin/details.php', $data);
     }
 
     /**

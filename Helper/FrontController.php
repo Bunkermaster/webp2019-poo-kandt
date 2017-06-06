@@ -19,6 +19,7 @@ class FrontController
     {
         // gestion de l'action appelée, GEST en prio, puis POST puis chaine vide
         $a = $_GET['a'] ?? $_POST['a'] ?? '';
+        $a = ltrim(rtrim($a, "/"), "/");
         try {
             switch($a){
                 case "details":
@@ -28,7 +29,6 @@ class FrontController
                     break;
 
                 case "admin":
-                case "admin/":
                     $controller = new PageController();
                     $output = $controller->adminHomeAction();
                     break;
@@ -36,6 +36,11 @@ class FrontController
                 case "admin/add":
                     $controller = new PageController();
                     $output = $controller->adminAddAction();
+                    break;
+
+                case "admin/details":
+                    $controller = new PageController();
+                    $output = $controller->adminDetailsAction();
                     break;
 
                 case "admin/edit":
@@ -51,8 +56,9 @@ class FrontController
             }
         } catch (\PDOException $e) {
             die('Erreur PDO '. $e->getMessage());
-//        } catch ( ) {
-//
+        } catch (\Exception $e) {
+            $ref = new \ReflectionClass($e);
+            die($ref->getName() . " " .  $e->getMessage()." hahahah ". $e->getCode());
         }
         echo $output;
     }
